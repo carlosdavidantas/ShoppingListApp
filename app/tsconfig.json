@@ -13,5 +13,5 @@
     "**/*.tsx",
     ".expo/types/**/*.ts",
     "expo-env.d.ts"
-  ]
+, "app/components/AddAndClearShoppingItemsButtons.jsx", "app/components/Header.jsx", "app/components/ShoppingList.jsx", "app/index.jsx", "app/screens/home/index.jsx"  ]
 }
