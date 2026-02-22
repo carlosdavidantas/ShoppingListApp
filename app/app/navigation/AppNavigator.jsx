@@ -28,7 +28,7 @@ export default function APPNavigator() {
                 component={AddAndEditItem}
                 options={{
                     title: "Adicionar Item",
-                    headerShown: true,
+                    headerShown: false,
                 }}
             />
         </Stack.Navigator>
