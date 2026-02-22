@@ -1,10 +1,10 @@
-import { TouchableOpacity, StyleSheet } from "react-native";
+import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function NavigationButton({ style, icon, size, color, onPress }) {
+export default function NavigationButton({ style, icon, size, color, onPress, name }) {
     return (
         <TouchableOpacity style={style || styles.button} onPress={onPress}>
-            <Ionicons name={icon} size={size || 24} color={color || "#fff"} />
+            {name ? <Text style={{ color: color || "#fff" }}>{name}</Text> : <Ionicons name={icon} size={size || 24} color={color || "#fff"} />}
         </TouchableOpacity>
     );
 }
