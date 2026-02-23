@@ -13,6 +13,7 @@ export default function AddAndEditItem() {
         <SafeAreaView style={{ backgroundColor: "#ecf0f1", flex: 1 }}>
             <View style={styles.buttonContainer}>
                 <Button style={styles.backButton} icon="arrow-back" size={15} onPress={() => navigation.goBack()} />
+                <Text style={styles.title}>Adicionar item</Text>
             </View>
             <View style={styles.inputBackground}>
                 <LabelAndInput label="Nome do Item" inputPlaceHolder="Digite aqui" />
@@ -49,6 +50,8 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: "row",
         padding: 16,
+        justifyContent: "flex-start",
+        alignItems: "center",
     },
     backButton: {
         backgroundColor: "#3498db",
@@ -62,6 +65,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.3,
         shadowRadius: 4,
         elevation: 8,
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: "bold",
+        marginLeft: 16,
     },
     unitsBackground: {
         height: 100,
