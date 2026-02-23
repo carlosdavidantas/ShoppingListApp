@@ -33,6 +33,22 @@ export class StorageService {
         }
     }
 
+    static async updateItem(id, updatedItem) {
+        try {
+            const items = await this.getItems();
+            const index = items.findIndex(item => item.id === id);
+            if (index !== -1) {
+                items[index] = {...items[index], ...updatedItem};
+                await this.saveItems(items);
+            } else {
+                console.warn("Item not found for update:", updatedItem);
+            }
+        } catch (error) {
+            console.error("Error updating item:", error);
+            throw error;
+        }
+    }
+
     static async deleteItem(id) {
         try {
             const items = await this.getItems();
