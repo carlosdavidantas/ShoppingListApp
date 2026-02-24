@@ -1,14 +1,26 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, StyleSheet, Text } from "react-native";
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import Button from "@/app/components/Button";
 import LabelAndInput from "@/app/components/LabelAndInput";
 import Checkbox from "expo-checkbox";
+import { useShopping } from "@/app/context/shoppingContext";
 
 export default function AddAndEditItem() {
     const navigation = useNavigation();
+    const route = useRoute();
+    const { item } = route.params || {};
+    const { addItem, updateItem } = useShopping();
+
+    const [name, setName] = useState("");
+    const [quantity, setQuantity] = useState("");
+    const [unitPrice, setUnitPrice] = useState("");
     const [selectedUnit, setSelectedUnit] = useState(null);
+    const [taken, setTaken] = useState(false);
+    const [errors, setErrors] = useState({ name: "", quantity: "", unitPrice: "", selectedUnit: "" });
+
+    
     return (
         <SafeAreaView style={{ backgroundColor: "#ecf0f1", flex: 1 }}>
             <View style={styles.buttonContainer}>
@@ -38,7 +50,14 @@ export default function AddAndEditItem() {
                     </View>
                 </View>
             </View>
-            <View style={{flex: 1, justifyContent: "flex-end", alignItems: "center", gap: 20 }}>
+            <View style={styles.takenButtonBackground}>
+                <Button 
+                    name={taken ? "No carrinho" : "Fora do carrinho"} 
+                    style={[styles.takenButton, taken && { backgroundColor: "#3498db" }]}
+                    onPress={() => setTaken(!taken)}
+                />
+            </View>
+            <View style={{ flex: 1, justifyContent: "flex-end", alignItems: "center", gap: 20 }}>
                 <Button name="Salvar" style={styles.saveButton} />
                 <Button name="Cancelar" style={styles.cancelButton} />
             </View>
@@ -47,6 +66,9 @@ export default function AddAndEditItem() {
 }
 
 const styles = StyleSheet.create({
+    inputBackground: {
+        backgroundColor: "transparent",
+    },
     buttonContainer: {
         flexDirection: "row",
         padding: 16,
@@ -95,19 +117,38 @@ const styles = StyleSheet.create({
     },
     checkboxContainer: {
         flexDirection: "row",
-        gap:10,
+        gap: 10,
         alignItems: "center",
         justifyContent: "space-around",
         marginLeft: 5,
     },
     checkbox: {
-        transform: [{ scale: 1.5}],
+        transform: [{ scale: 1.5 }],
     },
     checkboxLabel: {
         color: "#1a1919",
         fontSize: 16,
         fontWeight: "bold",
-    }, 
+    },
+    takenButtonBackground: {
+        backgroundColor: "transparent",
+        padding: 16,
+        justifyContent: "center",
+        alignItems: "flex-end",
+    },
+    takenButton: {
+        backgroundColor: "#e74c3c",
+        width: 100,
+        height: 50,
+        borderRadius: 28,
+        justifyContent: "center",
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 4,
+        elevation: 8,
+    },
     saveButton: {
         backgroundColor: "#3498db",
         width: "70%",
