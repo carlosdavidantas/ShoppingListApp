@@ -1,17 +1,16 @@
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Alert } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useState } from "react";
 import Button from "@/app/components/Button";
 import LabelAndInput from "@/app/components/LabelAndInput";
 import Checkbox from "expo-checkbox";
-import { useShopping } from "@/app/context/shoppingContext";
+import { useShopping } from "@/app/context/ShoppingContext";
+import { validateName, validateQuantity, validateUnitPrice } from "@/app/utils/calculations";
 
 export default function AddAndEditItem() {
     const navigation = useNavigation();
-    const route = useRoute();
-    const { item } = route.params || {};
-    const { addItem, updateItem } = useShopping();
+    const { addItem } = useShopping();
 
     const [name, setName] = useState("");
     const [quantity, setQuantity] = useState("");
@@ -20,7 +19,57 @@ export default function AddAndEditItem() {
     const [taken, setTaken] = useState(false);
     const [errors, setErrors] = useState({ name: "", quantity: "", unitPrice: "", selectedUnit: "" });
 
-    
+    const validadeFields = () => {
+        const newErrors = {};
+
+        const nameValidation = validateName(name);
+        if (!nameValidation.isValid)
+            newErrors.name = nameValidation.error;
+
+        const quantityValue = parseFloat(quantity.replace(",", "."));
+
+        const quantityValidation = validateQuantity(quantityValue);
+        if (!quantityValidation.isValid)
+            newErrors.quantity = quantityValidation.error;
+
+        if (unitPrice) {
+            const unitPriceValue = parseFloat(unitPrice.replace(",", "."));
+            const unitPriceValidation = validateUnitPrice(unitPriceValue);
+            if (!unitPriceValidation.isValid)
+                newErrors.unitPrice = unitPriceValidation.error;
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
+
+    const handleSave = async () => {
+        if (!validadeFields())
+            return;
+
+        try {
+            const quantityParsed = parseFloat(quantity.replace(",", "."));
+            const unitPriceParsed = unitPrice ? parseFloat(unitPrice.replace(",", ".")) : null;
+
+            const newItem = {
+                name: name.trim(),
+                quantity: quantityParsed,
+                unitPrice: unitPriceParsed,
+                unit: selectedUnit,
+                taken,
+            }
+            
+            await addItem(newItem);
+            console.log("Item added:", newItem);
+            Alert.alert("Success", "Item added successfully!");
+            navigation.goBack();
+        } catch (error) {
+            Alert.alert("Error", "An error occurred while saving the item. Please try again.")
+        }
+    }
+
+
     return (
         <SafeAreaView style={{ backgroundColor: "#ecf0f1", flex: 1 }}>
             <View style={styles.buttonContainer}>
@@ -28,9 +77,9 @@ export default function AddAndEditItem() {
                 <Text style={styles.title}>Adicionar item</Text>
             </View>
             <View style={styles.inputBackground}>
-                <LabelAndInput label="Nome do Item" inputPlaceHolder="Digite aqui" />
-                <LabelAndInput label="Quantidade" inputPlaceHolder="Digite aqui" />
-                <LabelAndInput label="Preço Unitário" inputPlaceHolder="Digite aqui" />
+                <LabelAndInput label="Nome do Item" inputPlaceHolder="Digite aqui" valueState={name} onChangeTextState={setName} />
+                <LabelAndInput label="Quantidade" inputPlaceHolder="Digite aqui" valueState={quantity} onChangeTextState={setQuantity} />
+                <LabelAndInput label="Preço Unitário" inputPlaceHolder="Digite aqui" valueState={unitPrice} onChangeTextState={setUnitPrice} />
 
                 <View style={styles.unitsBackground}>
                     <Text style={{ fontSize: 16, marginBottom: 10 }}>Unidade de Medida</Text>
@@ -51,14 +100,14 @@ export default function AddAndEditItem() {
                 </View>
             </View>
             <View style={styles.takenButtonBackground}>
-                <Button 
-                    name={taken ? "No carrinho" : "Fora do carrinho"} 
+                <Button
+                    name={taken ? "No carrinho" : "Fora do carrinho"}
                     style={[styles.takenButton, taken && { backgroundColor: "#3498db" }]}
                     onPress={() => setTaken(!taken)}
                 />
             </View>
             <View style={{ flex: 1, justifyContent: "flex-end", alignItems: "center", gap: 20 }}>
-                <Button name="Salvar" style={styles.saveButton} />
+                <Button name="Salvar" style={styles.saveButton} onPress={() => handleSave()} />
                 <Button name="Cancelar" style={styles.cancelButton} />
             </View>
         </SafeAreaView>

@@ -1,11 +1,13 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import Home from "@/app/screens/home";
-import AddAndEditItem from "@/app/screens/addAndEditItem";
+import Home from "@/app/screens/Home";
+import AddAndEditItem from "@/app/screens/AddAndEditItem";
+import { ShoppingProvider } from "@/app/context/ShoppingContext";
 
 const Stack = createNativeStackNavigator();
 export default function APPNavigator() {
     return (
-        <Stack.Navigator
+        <ShoppingProvider>
+            <Stack.Navigator
             initialRouteName="Home"
             screenOptions={{
                 headerStyle: {
@@ -32,5 +34,6 @@ export default function APPNavigator() {
                 }}
             />
         </Stack.Navigator>
+        </ShoppingProvider>
     );
 }
