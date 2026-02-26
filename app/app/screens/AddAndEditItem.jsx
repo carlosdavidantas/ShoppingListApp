@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
     },
     saveButton: {
         backgroundColor: "#3498db",
-        width: "70%",
+        width: "90%",
         height: "20%",
         borderRadius: 28,
         justifyContent: "center",
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     },
     cancelButton: {
         backgroundColor: "#417191",
-        width: "70%",
+        width: "90%",
         height: "20%",
         borderRadius: 28,
         justifyContent: "center",
