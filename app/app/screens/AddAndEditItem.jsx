@@ -1,7 +1,7 @@
 import { SafeAreaView } from "react-native-safe-area-context";
 import { View, StyleSheet, Text, Alert } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Button from "@/app/components/Button";
 import LabelAndInput from "@/app/components/LabelAndInput";
 import Checkbox from "expo-checkbox";
@@ -10,7 +10,10 @@ import { validateName, validateQuantity, validateUnitPrice } from "@/app/utils/c
 
 export default function AddAndEditItem() {
     const navigation = useNavigation();
-    const { addItem } = useShopping();
+    const route = useRoute();
+
+    const { addItem, updateItem } = useShopping();
+    const { item } = route.params || {};
 
     const [name, setName] = useState("");
     const [quantity, setQuantity] = useState("");
@@ -18,6 +21,19 @@ export default function AddAndEditItem() {
     const [selectedUnit, setSelectedUnit] = useState(null);
     const [taken, setTaken] = useState(false);
     const [errors, setErrors] = useState({ name: "", quantity: "", unitPrice: "", selectedUnit: "" });
+
+    useEffect(() => {
+        if(item) {
+            setName(item.name);
+            setQuantity(item.quantity.toString());
+            setUnitPrice(item.unitPrice ? item.unitPrice.toString() : "");
+            setSelectedUnit(item.unit);
+            setTaken(item.taken);
+            navigation.setOptions({ title: "Editar item" });
+        } else {
+            navigation.setOptions({ title: "Adicionar item" });
+        }
+    }, [item, navigation]);
 
     const validadeFields = () => {
         const newErrors = {};
@@ -59,6 +75,14 @@ export default function AddAndEditItem() {
                 unit: selectedUnit,
                 taken,
             }
+
+            if(item) {
+                await updateItem(item.id, newItem);
+                console.log("Item updated:", newItem);
+                Alert.alert("Success", "Item updated successfully!");
+                navigation.goBack();
+                return;
+            }
             
             await addItem(newItem);
             console.log("Item added:", newItem);
@@ -68,7 +92,6 @@ export default function AddAndEditItem() {
             Alert.alert("Error", "An error occurred while saving the item. Please try again.")
         }
     }
-
 
     return (
         <SafeAreaView style={{ backgroundColor: "#ecf0f1", flex: 1 }}>
@@ -108,7 +131,7 @@ export default function AddAndEditItem() {
             </View>
             <View style={{ flex: 1, justifyContent: "flex-end", alignItems: "center", gap: 20 }}>
                 <Button name="Salvar" style={styles.saveButton} onPress={() => handleSave()} />
-                <Button name="Cancelar" style={styles.cancelButton} />
+                <Button name="Cancelar" style={styles.cancelButton} onPress={() => navigation.goBack()} />
             </View>
         </SafeAreaView>
     );

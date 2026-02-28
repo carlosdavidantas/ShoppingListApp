@@ -1,7 +1,18 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function ShoppingItem({ item }) {
+export default function ShoppingItem({ item, onEdit, onDelete, onToggleTaken }) {
+    const handleDelete = () => {
+        Alert.alert(
+            "Confirmar exclusão",
+            `Tem certeza que deseja excluir "${item.name}"?`,
+            [
+                { text: "Cancelar", style: "cancel" },
+                { text: "Excluir", style: "destructive", onPress: () => onDelete(item.id) }
+            ]
+        );
+    };
+
     return (
         <View style={styles.itemContainer}>
             <View style={styles.itemInfo}>
@@ -13,10 +24,10 @@ export default function ShoppingItem({ item }) {
                 </Text>
             </View>
             <View style={styles.itemActions}>
-                <TouchableOpacity onPress={() => console.log("Edit item", item.id)}>
+                <TouchableOpacity onPress={() => onEdit(item)}>
                     <Ionicons name="pencil" size={20} color="#007bff" />
                 </TouchableOpacity>
-                <TouchableOpacity onPress={() => console.log("Edit item", item.id)}>
+                <TouchableOpacity onPress={() => handleDelete()}>
                     <Ionicons name="trash" size={20} color="#dc3545" />
                 </TouchableOpacity>
             </View>

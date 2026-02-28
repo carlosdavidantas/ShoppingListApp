@@ -2,8 +2,11 @@ import { FlatList, StyleSheet, View, Text } from "react-native";
 import ShoppingItem from "@/app/components/ShoppingItem";
 import { useShopping } from "../context/ShoppingContext";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
 export default function ShoppingList() {
+    const navigation = useNavigation();
+
     const {
         getFilteredItems,
         deleteItem,
@@ -14,16 +17,36 @@ export default function ShoppingList() {
 
     const filteredItems = getFilteredItems();
 
+    const handleEditItem = (item) => {
+        navigation.navigate("AddAndEditItem", { item });
+    };
+
+    const handleDeleteItem = async (id) => {
+        try {
+            await deleteItem(id);
+        } catch (error) {
+            Alert.alert("Erro", "Não foi possível excluir o item.");
+        }
+    };
+
+    const handleToggleTaken = async (id) => {
+        try {
+            await toggleItemTaken(id);
+        } catch (error) {
+            Alert.alert("Erro", "Não foi possível atualizar o status do item.");
+        }
+    };
+
     const renderEmptyState = () => (
         <View style={styles.emptyContainer}>
             <Ionicons name="cart-outline" size={80} color="#bdc3c7" />
             <Text style={styles.emptyTitle}>
-                {filteredItems.length === 0 ? 'Lista vazia' : 'Nenhum item encontrado'}
+                {filteredItems.length === 0 ? "Lista vazia" : "Nenhum item encontrado"}
             </Text>
             <Text style={styles.emptySubtitle}>
                 {filteredItems.length === 0
-                    ? 'Adicione itens à sua lista de compras'
-                    : 'Tente ajustar os filtros ou a busca'}
+                    ? "Adicione itens à sua lista de compras"
+                    : "Tente ajustar os filtros ou a busca"}
             </Text>
         </View>
     );
@@ -33,7 +56,12 @@ export default function ShoppingList() {
             data={filteredItems}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-                <ShoppingItem item={item} />
+                <ShoppingItem
+                    item={item}
+                    onDelete={handleDeleteItem}
+                    onToggleTaken={handleToggleTaken}
+                    onEdit={handleEditItem}
+                />
             )}
             ListEmptyComponent={renderEmptyState}
             contentContainerStyle={[
