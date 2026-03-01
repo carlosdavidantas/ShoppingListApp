@@ -76,11 +76,11 @@ export default function ShoppingList() {
 
 const styles = StyleSheet.create({
     flatList: {
-        backgroundColor: "#ada30d",
+        backgroundColor: "transparent",
         height: 600,
     },
     listContent: {
-        backgroundColor: "#13cc03",
+        backgroundColor: "transparent",
         display: "flex",
         flexDirection: "column",
         gap: 12,

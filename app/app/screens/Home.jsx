@@ -18,7 +18,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
     safeArea: {
-        backgroundColor: '#a2b3ff',
+        backgroundColor: '#ecf0f1',
     },
     appContainer: {
         height: "100%",
