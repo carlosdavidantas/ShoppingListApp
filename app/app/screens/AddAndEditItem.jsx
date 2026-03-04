@@ -96,7 +96,7 @@ export default function AddAndEditItem() {
     return (
         <SafeAreaView style={{ backgroundColor: "#ecf0f1", flex: 1 }}>
             <View style={styles.buttonContainer}>
-                <Button style={styles.backButton} icon="arrow-back" size={15} onPress={() => navigation.goBack()} />
+                <Button style={styles.backButton} icon="arrow-back" iconSize={15} onPress={() => navigation.goBack()} />
                 <Text style={styles.title}>Adicionar item</Text>
             </View>
             <View style={styles.inputBackground}>
@@ -108,15 +108,15 @@ export default function AddAndEditItem() {
                     <Text style={{ fontSize: 16, marginBottom: 10 }}>Unidade de Medida</Text>
                     <View style={styles.checkboxsBackground}>
                         <View style={styles.checkboxContainer}>
-                            <Checkbox value={selectedUnit === "un"} onValueChange={() => setSelectedUnit("un")} style={styles.checkbox} />
+                            <Checkbox value={selectedUnit === "unidade"} onValueChange={() => setSelectedUnit("unidade")} style={styles.checkbox} />
                             <Text style={styles.checkboxLabel}>Unidade</Text>
                         </View>
                         <View style={styles.checkboxContainer}>
-                            <Checkbox value={selectedUnit === "l"} onValueChange={() => setSelectedUnit("l")} style={styles.checkbox} />
+                            <Checkbox value={selectedUnit === "litro"} onValueChange={() => setSelectedUnit("litro")} style={styles.checkbox} />
                             <Text style={styles.checkboxLabel}>Litros</Text>
                         </View>
                         <View style={styles.checkboxContainer}>
-                            <Checkbox value={selectedUnit === "kg"} onValueChange={() => setSelectedUnit("kg")} style={styles.checkbox} />
+                            <Checkbox value={selectedUnit === "kilograma"} onValueChange={() => setSelectedUnit("kilograma")} style={styles.checkbox} />
                             <Text style={styles.checkboxLabel}>Kilogramas</Text>
                         </View>
                     </View>
