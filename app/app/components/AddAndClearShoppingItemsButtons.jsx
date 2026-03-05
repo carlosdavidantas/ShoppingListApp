@@ -1,20 +1,45 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useNavigation } from '@react-navigation/native';
+
 import Button from "@/app/components/Button";
 
-export default function AddAndClearShoppingItemsButtons() {
+export default function AddAndClearShoppingItemsButtons( {addButtonScreenRoute, clearList} ) {
+    console.log(addButtonScreenRoute);
+    
     const navigation = useNavigation();
+
+    const handleClearList = () => {
+            Alert.alert(
+                "Limpar Lista",
+                "Deseja realmente limpar toda a lista? Esta ação não pode ser desfeita.",
+                [
+                    {text: "Cancelar", style: "cancel"},
+                    {
+                        text: "Limpar",
+                        onPress: async () => {
+                            try{
+                                await clearList();
+                            } catch (error) {
+                                Alert.alert("Erro", "Não foi possível limpar a lista.");
+                            }
+                        }
+                    }
+                ]
+    
+            )
+        }
+
     return (
         <View style={styles.buttonContainer}>
             <Button
                 icon="add"
-                onPress={() => navigation.navigate("AddAndEditItem")}
+                onPress={() => navigation.navigate(addButtonScreenRoute)}
             />
 
             <Button
                 style={styles.deleteButton}
                 icon="trash-outline"
-                onPress={() => console.log("Limpar itens")}
+                onPress={() => handleClearList()}
             />
         </View>
     );
