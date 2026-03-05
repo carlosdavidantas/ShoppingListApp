@@ -3,9 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 
 import Button from "@/app/components/Button";
 
-export default function AddAndClearShoppingItemsButtons( {addButtonScreenRoute, clearList} ) {
-    console.log(addButtonScreenRoute);
-    
+export default function AddAndClearShoppingItemsButtons( {addButtonScreenRoute, clearList} ) {    
     const navigation = useNavigation();
 
     const handleClearList = () => {
