@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useShopping } from "../context/ShoppingContext";
+import theme from "@/app/theme";
 
 export default function Header() {
     const { getTotalPrice, getFilteredItems, getTakenItemsPrice } = useShopping();
@@ -7,6 +8,7 @@ export default function Header() {
     const totalItems = getFilteredItems().length;
     const takenItemsPrice = getTakenItemsPrice().toFixed(2);
     const itemLabel = totalItems === 1 ? "item" : "itens";
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Lista de Compras</Text>
@@ -19,30 +21,29 @@ export default function Header() {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 16,
-        backgroundColor: "#1c2a66",
+        padding: theme.spacing.md,
+        backgroundColor: theme.colors.primary,
         justifyContent: "space-between",
         alignItems: "flex-start",
-        gap: 4,
+        gap: theme.spacing.xs,
     },
     title: {
-        color: "#fff",
-        fontSize: 22,
-        fontWeight: "bold",
+        color: theme.colors.primaryText,
+        fontSize: theme.fontSizes.lg,
+        fontWeight: theme.fontWeights.bold,
     },
     totalItemsValue: {
-        color: "#b6b6b6",
-        fontSize: 12,
-        paddingBottom: 10,
+        color: theme.colors.secoundaryText,
+        fontSize: theme.fontSizes.sm,
+        paddingBottom: theme.spacing.md,
     },
     takenItemsPrice: {
-        color: "#00910c",
-        fontSize: 14,
-        paddingBottom: 8,
+        color: theme.colors.success,
+        fontSize: theme.fontSizes.sm,
     },
     totalValueText: {
-        color: "#ff0000",
-        fontSize: 18,
-        fontWeight: "bold",
+        color: theme.colors.danger,
+        fontSize: theme.fontSizes.md,
+        fontWeight: theme.fontWeights.bold,
     }
 });

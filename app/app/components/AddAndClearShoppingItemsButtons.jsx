@@ -1,7 +1,7 @@
 import { View, StyleSheet, Alert } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-
 import Button from "@/app/components/Button";
+import theme from "@/app/theme";
 
 export default function AddAndClearShoppingItemsButtons( {addButtonScreenRoute, clearList} ) {    
     const navigation = useNavigation();
@@ -49,19 +49,19 @@ const styles = StyleSheet.create({
         bottom: 0,
         right: 10,
         flexDirection: "row",
-        gap: 10,
+        gap: theme.spacing.sm,
     },
     deleteButton: {
-        backgroundColor: "#e74c3c",
+        backgroundColor: theme.colors.danger,
         width: 40,
         height: 40,
-        borderRadius: 20,
+        borderRadius: theme.borders.xl,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 8,
+        shadowColor: theme.buttonsShadow.shadowColor,
+        shadowOffset: theme.buttonsShadow.shadowOffset,
+        shadowOpacity: theme.buttonsShadow.shadowOpacity,
+        shadowRadius: theme.buttonsShadow.shadowRadius,
+        elevation: theme.buttonsShadow.elevation,
     },
 });

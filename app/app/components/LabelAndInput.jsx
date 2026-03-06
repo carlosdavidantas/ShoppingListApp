@@ -1,21 +1,44 @@
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
+import theme from "@/app/theme";
 
 export default function LabelAndInput({ label, inputPlaceHolder, valueState, onChangeTextState, textInputType }) {
     return (
-        <View style={{ backgroundColor: "#fff", marginLeft: 16, marginRight: 16, marginBottom: 5, padding: 16, borderRadius: 8, shadowColor: "#000", shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4, elevation: 2 }}>
-            <Text style={{ fontSize: 16, marginBottom: 10 }}>{label}</Text>
+        <View style={sytles.background}>
+            <Text style={sytles.label}>{label}</Text>
             <TextInput
                 placeholder={inputPlaceHolder}
                 value={valueState}
                 onChangeText={onChangeTextState}
                 keyboardType={textInputType}
-                style={{
-                    borderWidth: 1,
-                    borderColor: "#ccc",
-                    borderRadius: 4,
-                    fontSize: 16,
-                }}
+                style={sytles.input}
             />
         </View>
     );
 }
+
+const sytles = StyleSheet.create({
+    background: {
+        backgroundColor: theme.colors.primaryText,
+        marginLeft: theme.spacing.md,
+        marginRight: theme.spacing.md,
+        marginBottom: theme.spacing.md,
+        padding: theme.spacing.md,
+        borderRadius: theme.borders.sm,
+        shadowColor: theme.buttonsShadow.shadowColor,
+        shadowOffset: theme.buttonsShadow.shadowOffset,
+        shadowOpacity: theme.buttonsShadow.shadowOpacity,
+        shadowRadius: theme.buttonsShadow.shadowRadius,
+        elevation: theme.buttonsShadow.elevation,
+    },
+    label: {
+        fontSize: theme.fontSizes.md,
+        marginBottom: theme.spacing.sm
+    },
+    input: {
+        borderWidth: 1,
+        borderColor: theme.colors.borderColor,
+        borderRadius: theme.borders.sm,
+        fontSize: theme.fontSizes.md,
+        paddingLeft: theme.spacing.sm
+    }
+})

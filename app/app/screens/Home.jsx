@@ -5,6 +5,7 @@ import Header from "@/app/components/Header";
 import SearchAndFilter from "@/app/components/SearchAndFilter";
 import ShoppingList from "@/app/components/ShoppingList";
 import AddAndClearShoppingItemsButtons from "@/app/components/AddAndClearShoppingItemsButtons";
+import theme from "@/app/theme";
 
 export default function Home() {
     const { clearList } = useShopping();
@@ -26,7 +27,7 @@ export default function Home() {
 
 const styles = StyleSheet.create({
     safeArea: {
-        backgroundColor: '#ecf0f1',
+        backgroundColor: theme.colors.background,
     },
     appContainer: {
         height: "100%",

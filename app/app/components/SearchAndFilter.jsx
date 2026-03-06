@@ -1,5 +1,6 @@
 import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from "react-native";
 import { useShopping } from "../context/ShoppingContext";
+import theme from "@/app/theme";
 
 export default function SearchAndFilter() {
     const { searchTerm, setSearchTerm, filter, setFilter } = useShopping();
@@ -51,41 +52,40 @@ export default function SearchAndFilter() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#fff',
-        padding: 16,
+        backgroundColor: theme.colors.primaryText,
+        padding: theme.spacing.md,
         borderBottomWidth: 1,
-        borderBottomColor: '#e0e0e0',
+        borderBottomColor: theme.colors.borderColor,
     },
     searchInput: {
-        backgroundColor: '#f5f5f5',
-        borderRadius: 8,
-        padding: 12,
-        fontSize: 16,
-        color: '#333',
-        marginBottom: 12,
+        backgroundColor: theme.colors.lightText,
+        borderRadius: theme.borders.sm,
+        padding: theme.spacing.md,
+        fontSize: theme.fontSizes.md,
+        color: theme.colors.text,
+        marginBottom: theme.spacing.md,
     },
     filterContainer: {
         flexDirection: 'row',
     },
     filterButton: {
-        paddingHorizontal: 16,
-        paddingVertical: 8,
-        borderRadius: 20,
-        backgroundColor: '#f5f5f5',
-        marginRight: 8,
+        paddingHorizontal: theme.spacing.md,
+        paddingVertical: theme.spacing.sm,
+        borderRadius: theme.borders.sm,
+        backgroundColor: theme.colors.lightText,
+        marginRight: theme.spacing.md,
         borderWidth: 1,
-        borderColor: '#e0e0e0',
+        borderColor: theme.colors.borderColor,
     },
     activeFilterButton: {
-        backgroundColor: '#3498db',
-        borderColor: '#3498db',
+        backgroundColor: theme.colors.secondary,
+        borderColor: theme.colors.secondary,
     },
     filterText: {
-        fontSize: 14,
-        color: '#666',
-        fontWeight: '500',
+        fontSize: theme.fontSizes.sm,
+        color: theme.colors.text,
     },
     activeFilterText: {
-        color: '#fff',
+        color: theme.colors.primaryText,
     },
 });

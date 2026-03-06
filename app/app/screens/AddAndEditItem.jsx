@@ -7,6 +7,7 @@ import LabelAndInput from "@/app/components/LabelAndInput";
 import Checkbox from "expo-checkbox";
 import { useShopping } from "@/app/context/ShoppingContext";
 import { validateName, validateQuantity, validateUnitPrice } from "@/app/utils/calculations";
+import theme from "@/app/theme";
 
 export default function AddAndEditItem() {
     const navigation = useNavigation();
@@ -78,8 +79,6 @@ export default function AddAndEditItem() {
 
             if(item) {
                 await updateItem(item.id, newItem);
-                console.log("Item updated:", newItem);
-                Alert.alert("Success", "Item updated successfully!");
                 navigation.goBack();
                 return;
             }
@@ -92,9 +91,9 @@ export default function AddAndEditItem() {
     }
 
     return (
-        <SafeAreaView style={{ backgroundColor: "#ecf0f1", flex: 1 }}>
+        <SafeAreaView style={{ backgroundColor: theme.colors.background, flex: 1 }}>
             <View style={styles.buttonContainer}>
-                <Button style={styles.backButton} icon="arrow-back" iconSize={15} onPress={() => navigation.goBack()} />
+                <Button style={styles.backButton} icon="arrow-back" iconSize={theme.spacing.md} onPress={() => navigation.goBack()} />
                 <Text style={styles.title}>Adicionar item</Text>
             </View>
             <View style={styles.inputBackground}>
@@ -103,7 +102,7 @@ export default function AddAndEditItem() {
                 <LabelAndInput label="Preço Unitário" inputPlaceHolder="Digite aqui" valueState={unitPrice} onChangeTextState={setUnitPrice} textInputType={"decimal-pad"} />
 
                 <View style={styles.unitsBackground}>
-                    <Text style={{ fontSize: 16, marginBottom: 10 }}>Unidade de Medida</Text>
+                    <Text style={{ fontSize: theme.fontSizes.md, marginBottom: theme.spacing.md }}>Unidade de Medida</Text>
                     <View style={styles.checkboxsBackground}>
                         <View style={styles.checkboxContainer}>
                             <Checkbox value={selectedUnit === "unidade"} onValueChange={() => setSelectedUnit("unidade")} style={styles.checkbox} />
@@ -123,11 +122,11 @@ export default function AddAndEditItem() {
             <View style={styles.takenButtonBackground}>
                 <Button
                     name={taken ? "No carrinho" : "Fora do carrinho"}
-                    style={[styles.takenButton, taken && { backgroundColor: "#3498db" }]}
+                    style={[styles.takenButton, taken && { backgroundColor: theme.colors.secondary }]}
                     onPress={() => setTaken(!taken)}
                 />
             </View>
-            <View style={{ flex: 1, justifyContent: "flex-end", alignItems: "center", gap: 20 }}>
+            <View style={{ flex: 1, justifyContent: "flex-end", alignItems: "center", gap: theme.spacing.lg }}>
                 <Button name="Salvar" style={styles.saveButton} onPress={() => handleSave()} />
                 <Button name="Cancelar" style={styles.cancelButton} onPress={() => navigation.goBack()} />
             </View>
@@ -141,43 +140,43 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: "row",
-        padding: 16,
+        padding: theme.spacing.md,
         justifyContent: "flex-start",
         alignItems: "center",
     },
     backButton: {
-        backgroundColor: "#3498db",
+        backgroundColor: theme.colors.secondary,
         width: 30,
         height: 30,
-        borderRadius: 28,
+        borderRadius: theme.borders.xl,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 8,
+        shadowColor: theme.buttonsShadow.shadowColor,
+        shadowOffset: theme.buttonsShadow.shadowOffset,
+        shadowOpacity: theme.buttonsShadow.shadowOpacity,
+        shadowRadius: theme.buttonsShadow.shadowRadius,
+        elevation: theme.buttonsShadow.elevation,
     },
     title: {
-        fontSize: 24,
-        fontWeight: "bold",
-        marginLeft: 16,
+        fontSize: theme.fontSizes.lg,
+        fontWeight: theme.fontWeights.bold,
+        marginLeft: theme.spacing.md,
     },
     unitsBackground: {
         height: 100,
         flexDirection: "column",
         justifyContent: "space-around",
-        backgroundColor: "#fff",
-        marginLeft: 16,
-        marginRight: 16,
-        marginBottom: 5,
-        padding: 16,
-        borderRadius: 8,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-        elevation: 2
+        backgroundColor: theme.colors.primaryText,
+        marginLeft: theme.spacing.md,
+        marginRight: theme.spacing.md,
+        marginBottom: theme.spacing.xs,
+        padding: theme.spacing.md,
+        borderRadius: theme.borders.sm,
+        shadowColor: theme.buttonsShadow.shadowColor,
+        shadowOffset: theme.buttonsShadow.shadowOffset,
+        shadowOpacity: theme.buttonsShadow.shadowOpacity,
+        shadowRadius: theme.buttonsShadow.shadowRadius,
+        elevation: theme.buttonsShadow.elevation,
     },
     checkboxsBackground: {
         width: "100%",
@@ -187,62 +186,62 @@ const styles = StyleSheet.create({
     },
     checkboxContainer: {
         flexDirection: "row",
-        gap: 10,
+        gap: theme.spacing.md,
         alignItems: "center",
         justifyContent: "space-around",
-        marginLeft: 5,
+        marginLeft: theme.spacing.xs,
     },
     checkbox: {
         transform: [{ scale: 1.5 }],
     },
     checkboxLabel: {
         color: "#1a1919",
-        fontSize: 16,
-        fontWeight: "bold",
+        fontSize: theme.fontSizes.sm,
+        fontWeight: theme.fontWeights.bold,
     },
     takenButtonBackground: {
         backgroundColor: "transparent",
-        padding: 16,
+        padding: theme.spacing.md,
         justifyContent: "center",
         alignItems: "flex-end",
     },
     takenButton: {
-        backgroundColor: "#e74c3c",
+        backgroundColor: theme.colors.danger,
         width: 100,
         height: 50,
-        borderRadius: 28,
+        borderRadius: theme.borders.sm,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 8,
+        shadowColor: theme.buttonsShadow.shadowColor,
+        shadowOffset: theme.buttonsShadow.shadowOffset,
+        shadowOpacity: theme.buttonsShadow.shadowOpacity,
+        shadowRadius: theme.buttonsShadow.shadowRadius,
+        elevation: theme.buttonsShadow.elevation,
     },
     saveButton: {
-        backgroundColor: "#3498db",
+        backgroundColor: theme.colors.secondary,
         width: "90%",
-        height: "20%",
-        borderRadius: 28,
+        height: "30%",
+        borderRadius: theme.borders.md,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 8,
+        shadowColor: theme.buttonsShadow.shadowColor,
+        shadowOffset: theme.buttonsShadow.shadowOffset,
+        shadowOpacity: theme.buttonsShadow.shadowOpacity,
+        shadowRadius: theme.buttonsShadow.shadowRadius,
+        elevation: theme.buttonsShadow.elevation,
     },
     cancelButton: {
-        backgroundColor: "#417191",
+        backgroundColor: theme.colors.primary,
         width: "90%",
-        height: "20%",
-        borderRadius: 28,
+        height: "30%",
+        borderRadius: theme.borders.md,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 8,
+        shadowColor: theme.buttonsShadow.shadowColor,
+        shadowOffset: theme.buttonsShadow.shadowOffset,
+        shadowOpacity: theme.buttonsShadow.shadowOpacity,
+        shadowRadius: theme.buttonsShadow.shadowRadius,
+        elevation: theme.buttonsShadow.elevation,
     },
 });

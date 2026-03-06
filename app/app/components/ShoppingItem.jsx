@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, Alert } from "react-native";
 import Checkbox from "expo-checkbox";
 import Button from "@/app/components/Button";
+import theme from "@/app/theme";
 
 export default function ShoppingItem({ item, onEdit, onDelete, onToggleTaken }) {
     const handleDelete = () => {
@@ -20,8 +21,8 @@ export default function ShoppingItem({ item, onEdit, onDelete, onToggleTaken }) 
                 <Text style={styles.itemName}> {item.name} </Text>
 
                 <View style={styles.checkboxContainer}>
-                    <Text style={styles.checkboxLabel}>No carrinho: </Text>
-                    <Checkbox value={item.taken} onValueChange={() => onToggleTaken(item.id)} style={styles.checkbox} />
+                    <Text>No carrinho: </Text>
+                    <Checkbox value={item.taken} onValueChange={() => onToggleTaken(item.id)} />
                 </View>
             </View>
             <View style={styles.itemInfosBackground}>
@@ -33,13 +34,13 @@ export default function ShoppingItem({ item, onEdit, onDelete, onToggleTaken }) 
                 <View style={styles.editAndDeleteButtonBackground}>
                     <Button
                         icon={"pencil"}
-                        iconSize={16}
+                        iconSize={theme.spacing.md}
                         onPress={() => onEdit(item)}
                         style={styles.buttonEdit}
                     />
                     <Button
                         icon={"trash"}
-                        iconSize={16}
+                        iconSize={theme.spacing.md}
                         onPress={() => handleDelete()}
                         style={styles.buttonDelete}
                     />
@@ -54,16 +55,16 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: 16,
-        backgroundColor: "#fff",
-        borderRadius: 5,
-        marginBottom: 10,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        elevation: 3,
         flexWrap: "wrap",
+        padding: theme.spacing.md,
+        backgroundColor: theme.colors.primaryText,
+        borderRadius: theme.borders.sm,
+        marginBottom: theme.spacing.xs,
+        shadowColor: theme.buttonsShadow.shadowColor,
+        shadowOffset: theme.buttonsShadow.shadowOffset,
+        shadowOpacity: theme.buttonsShadow.shadowOpacity,
+        shadowRadius: theme.buttonsShadow.shadowRadius,
+        elevation: theme.buttonsShadow.elevation,
     },
     firstLine: {
         width: "100%",
@@ -72,20 +73,20 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     itemName: {
-        fontSize: 18,
-        fontWeight: "bold",
+        fontSize: theme.fontSizes.md,
+        fontWeight: theme.fontWeights.bold,
     },
     itemDetails: {
-        fontSize: 15,
-        color: "#666",
+        fontSize: theme.fontSizes.sm,
+        color: theme.colors.text,
     },
     itemDetailsTotal: {
-        fontSize: 15,
-        fontWeight: "bold",
-        color: "#00a035",
+        fontSize: theme.fontSizes.sm,
+        fontWeight: theme.fontWeights.bold,
+        color: theme.colors.success,
     },
     itemInfosBackground: {
-        paddingTop: 10,
+        paddingTop: theme.spacing.sm,
         width: "100%",
         display: "flex",
         flexDirection: "row",
@@ -104,10 +105,6 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         alignItems: "center"
     },
-    checkbox: {
-    },
-    checkboxLabel: {
-    },
     editAndDeleteButtonBackground: {
         width: "30%",
         display: "flex",
@@ -116,29 +113,29 @@ const styles = StyleSheet.create({
         alignItems: "center"
     },
     buttonEdit: {
-        backgroundColor: "#3498db",
+        backgroundColor: theme.colors.secondary,
         width: 30,
         height: 30,
-        borderRadius: 5,
+        borderRadius: theme.borders.sm,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 8,
+        shadowColor: theme.buttonsShadow.shadowColor,
+        shadowOffset: theme.buttonsShadow.shadowOffset,
+        shadowOpacity: theme.buttonsShadow.shadowOpacity,
+        shadowRadius: theme.buttonsShadow.shadowRadius,
+        elevation: theme.buttonsShadow.elevation,
     },
     buttonDelete: {
-        backgroundColor: "#e00f00",
+        backgroundColor: theme.colors.danger,
         width: 30,
         height: 30,
-        borderRadius: 5,
+        borderRadius: theme.borders.sm,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 8,
+        shadowColor: theme.buttonsShadow.shadowColor,
+        shadowOffset: theme.buttonsShadow.shadowOffset,
+        shadowOpacity: theme.buttonsShadow.shadowOpacity,
+        shadowRadius: theme.buttonsShadow.shadowRadius,
+        elevation: theme.buttonsShadow.elevation,
     },
 });

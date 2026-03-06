@@ -1,26 +1,27 @@
 import { TouchableOpacity, StyleSheet, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import theme from "@/app/theme";
 
 export default function NavigationButton({ style, icon, iconSize, color, onPress, name }) {
     return (
         <TouchableOpacity style={style || styles.button} onPress={onPress}>
-            {name ? <Text style={{ color: color || "#fff" }}>{name}</Text> : <Ionicons name={icon} size={iconSize || 24} color={color || "#fff"} />}
+            {name ? <Text style={{ color: color || `${theme.colors.lightText}` }}>{name}</Text> : <Ionicons name={icon} size={iconSize || theme.fontSizes.md} color={color || `${theme.colors.lightText}`} />}
         </TouchableOpacity>
     );
 }
 
 const styles = StyleSheet.create({
     button: {
-        backgroundColor: "#3498db",
+        backgroundColor: theme.colors.secondary,
         width: 50,
         height: 50,
-        borderRadius: 25,
+        borderRadius: theme.borders.xl,
         justifyContent: "center",
         alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 8,
+        shadowColor: theme.buttonsShadow.shadowColor,
+        shadowOffset: theme.buttonsShadow.shadowOffset,
+        shadowOpacity: theme.buttonsShadow.shadowOpacity,
+        shadowRadius: theme.buttonsShadow.shadowRadius,
+        elevation: theme.buttonsShadow.elevation,
     },
 });

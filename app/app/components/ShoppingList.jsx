@@ -3,6 +3,7 @@ import ShoppingItem from "@/app/components/ShoppingItem";
 import { useShopping } from "../context/ShoppingContext";
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import theme from "@/app/theme";
 
 export default function ShoppingList() {
     const navigation = useNavigation();
@@ -11,8 +12,6 @@ export default function ShoppingList() {
         getFilteredItems,
         deleteItem,
         toggleItemTaken,
-        clearList,
-        getTotalPrice,
     } = useShopping();
 
     const filteredItems = getFilteredItems();
@@ -39,7 +38,7 @@ export default function ShoppingList() {
 
     const renderEmptyState = () => (
         <View style={styles.emptyContainer}>
-            <Ionicons name="cart-outline" size={80} color="#bdc3c7" />
+            <Ionicons name="cart-outline" size={theme.borders.xl} color={theme.colors.secoundaryText}/>
             <Text style={styles.emptyTitle}>
                 {filteredItems.length === 0 ? "Lista vazia" : "Nenhum item encontrado"}
             </Text>
@@ -83,58 +82,26 @@ const styles = StyleSheet.create({
         backgroundColor: "transparent",
         display: "flex",
         flexDirection: "column",
-        gap: 12,
-        padding: 16,
+        gap: theme.spacing.md,
+        padding: theme.spacing.md,
     },
     emptyContainer: {
+        display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        paddingVertical: 40,
+        paddingVertical: theme.spacing.xl,
     },
     emptyTitle: {
-        fontSize: 20,
-        fontWeight: "bold",
-        color: "#7f8c8d",
-        marginTop: 16,
+        fontSize: theme.fontSizes.md,
+        fontWeight: theme.fontWeights.bold,
+        color: theme.colors.secoundaryText,
+        marginTop: theme.spacing.md,
     },
     emptySubtitle: {
-        fontSize: 16,
-        color: "#95a5a6",
+        fontSize: theme.fontSizes.md,
+        color: theme.colors.secoundaryText,
         textAlign: "center",
-        marginTop: 8,
-        paddingHorizontal: 32,
-    },
-    footer: {
-        position: "absolute",
-        bottom: 20,
-        right: 20,
-        flexDirection: "row",
-        gap: 12,
-    },
-    addButton: {
-        backgroundColor: "#3498db",
-        width: 56,
-        height: 56,
-        borderRadius: 28,
-        justifyContent: "center",
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 8,
-    },
-    clearButton: {
-        backgroundColor: "#e74c3c",
-        width: 48,
-        height: 48,
-        borderRadius: 24,
-        justifyContent: "center",
-        alignItems: "center",
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 4,
-        elevation: 8,
+        marginTop: theme.spacing.md,
+        paddingHorizontal: theme.spacing.xl,
     },
 });

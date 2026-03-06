@@ -64,7 +64,6 @@ export function ShoppingProvider({ children }) {
 
         try {
             await StorageService.addItem(newItem);
-            console.log(" Item saved:", newItem);
         } catch (error) {
             console.error("Error saving item:", error);
             setState(prev => ({
@@ -143,7 +142,6 @@ export function ShoppingProvider({ children }) {
     };
 
     const calculateTotalPrice = (items) => {
-        console.log(items);
         return items.reduce((total, item) => total + ((item.unitPrice || 0) * (item.quantity || 1)), 0);
     };
 

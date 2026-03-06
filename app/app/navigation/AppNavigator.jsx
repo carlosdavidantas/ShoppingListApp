@@ -8,32 +8,22 @@ export default function APPNavigator() {
     return (
         <ShoppingProvider>
             <Stack.Navigator
-            initialRouteName="Home"
-            screenOptions={{
-                headerStyle: {
-                    backgroundColor: "#2c3e50",
-                },
-                headerTintColor: "#fff",
-                headerTitleStyle: {
-                    fontWeight: "bold",
-                },
-            }}
-        >
-            <Stack.Screen
-                name="Home"
-                component={Home}
-                options={{ headerShown: false  }}
-            />
+                initialRouteName="Home"
+            >
+                <Stack.Screen
+                    name="Home"
+                    component={Home}
+                    options={{ headerShown: false }}
+                />
 
-            <Stack.Screen
-                name="AddAndEditItem"
-                component={AddAndEditItem}
-                options={{
-                    title: "Adicionar Item",
-                    headerShown: false,
-                }}
-            />
-        </Stack.Navigator>
+                <Stack.Screen
+                    name="AddAndEditItem"
+                    component={AddAndEditItem}
+                    options={{
+                        headerShown: false,
+                    }}
+                />
+            </Stack.Navigator>
         </ShoppingProvider>
     );
 }
