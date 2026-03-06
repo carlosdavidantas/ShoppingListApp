@@ -1,10 +1,13 @@
 import { View, Text, StyleSheet } from "react-native";
+import { useShopping } from "../context/ShoppingContext";
 
 export default function Header() {
+    const { getTotalPrice, getFilteredItems } = useShopping();
+    const total = getTotalPrice();
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Lista de Compras</Text>
-            <Text style={styles.totalValueText}>R$ {0}</Text>
+            <Text style={styles.totalValueText}>R$ {total}</Text>
         </View>
     );
 }

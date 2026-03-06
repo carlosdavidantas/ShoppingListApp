@@ -133,11 +133,12 @@ export function ShoppingProvider({ children }) {
     };
 
     const getTotalPrice = () => {
-        return calcularTotalGeral(state.items);
+        return calculateTotalPrice(state.items);
     };
 
-    const calcularTotalGeral = (items) => {
-        return items.reduce((total, item) => total + ((item.price || 0) * (item.quantity || 1)), 0);
+    const calculateTotalPrice = (items) => {
+        console.log(items);
+        return items.reduce((total, item) => total + ((item.unitPrice || 0) * (item.quantity || 1)), 0);
     };
 
     const getFilteredItems = () => {
