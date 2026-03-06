@@ -14,10 +14,6 @@ export default function ShoppingItem({ item, onEdit, onDelete, onToggleTaken }) 
         );
     };
 
-    const handleItemTaken =() => {
-        onToggleTaken()
-    }
-
     return (
         <View style={styles.itemContainer}>
             <View style={styles.firstLine}>
@@ -30,8 +26,8 @@ export default function ShoppingItem({ item, onEdit, onDelete, onToggleTaken }) 
             </View>
             <View style={styles.itemInfosBackground}>
                 <View style={styles.itemInfos}>
-                    <Text style={styles.itemDetails} >{item.quantity ? `Qtd: ${item.quantity}` : "Qtd: 1"}</Text>
-                    <Text style={styles.itemDetails} >{item.unitPrice ? `Preço por ${item.unit}: R$ ${item.unitPrice.toFixed(2)}` : ""}</Text>
+                    <Text style={styles.itemDetails} >{item.quantity ? `Quantidade: ${item.quantity}` : "Quantidade não informada"}</Text>
+                    <Text style={styles.itemDetails} >{item.unitPrice ? `Preço por ${item.unit}: R$ ${item.unitPrice.toFixed(2)}` : "Preço não informado"}</Text>
                     <Text style={styles.itemDetailsTotal} >{`Total: R$ ${(item.unitPrice * item.quantity).toFixed(2)}`}</Text>
                 </View>
                 <View style={styles.editAndDeleteButtonBackground}>

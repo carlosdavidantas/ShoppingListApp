@@ -18,7 +18,7 @@ export default function AddAndEditItem() {
     const [name, setName] = useState("");
     const [quantity, setQuantity] = useState("");
     const [unitPrice, setUnitPrice] = useState("");
-    const [selectedUnit, setSelectedUnit] = useState(null);
+    const [selectedUnit, setSelectedUnit] = useState("unidade");
     const [taken, setTaken] = useState(false);
     const [errors, setErrors] = useState({ name: "", quantity: "", unitPrice: "", selectedUnit: "" });
 
@@ -85,8 +85,6 @@ export default function AddAndEditItem() {
             }
             
             await addItem(newItem);
-            console.log("Item added:", newItem);
-            Alert.alert("Success", "Item added successfully!");
             navigation.goBack();
         } catch (error) {
             Alert.alert("Error", "An error occurred while saving the item. Please try again.")
@@ -101,8 +99,8 @@ export default function AddAndEditItem() {
             </View>
             <View style={styles.inputBackground}>
                 <LabelAndInput label="Nome do Item" inputPlaceHolder="Digite aqui" valueState={name} onChangeTextState={setName} />
-                <LabelAndInput label="Quantidade" inputPlaceHolder="Digite aqui" valueState={quantity} onChangeTextState={setQuantity} />
-                <LabelAndInput label="Preço Unitário" inputPlaceHolder="Digite aqui" valueState={unitPrice} onChangeTextState={setUnitPrice} />
+                <LabelAndInput label="Quantidade" inputPlaceHolder="Digite aqui" valueState={quantity} onChangeTextState={setQuantity} textInputType={"decimal-pad"} />
+                <LabelAndInput label="Preço Unitário" inputPlaceHolder="Digite aqui" valueState={unitPrice} onChangeTextState={setUnitPrice} textInputType={"decimal-pad"} />
 
                 <View style={styles.unitsBackground}>
                     <Text style={{ fontSize: 16, marginBottom: 10 }}>Unidade de Medida</Text>
