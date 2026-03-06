@@ -12,6 +12,7 @@ const ShoppingContext = createContext({
     setFilter: (filter) => { },
     setSearchTerm: (term) => { },
     clearList: async () => { },
+    getTakenItemsPrice: () => 0,
     getTotalPrice: () => 0,
     getFilteredItems: () => [],
 });
@@ -132,6 +133,11 @@ export function ShoppingProvider({ children }) {
         }
     };
 
+    const getTakenItemsPrice = () => {
+        const taken = state.items.filter(item => item.taken == true);
+        return calculateTotalPrice(taken);
+    }
+
     const getTotalPrice = () => {
         return calculateTotalPrice(state.items);
     };
@@ -171,6 +177,7 @@ export function ShoppingProvider({ children }) {
         setFilter,
         setSearchTerm,
         clearList,
+        getTakenItemsPrice,
         getTotalPrice,
         getFilteredItems,
     };
