@@ -15,6 +15,8 @@ const ShoppingContext = createContext({
     getTakenItemsPrice: () => 0,
     getTotalPrice: () => 0,
     getFilteredItems: () => [],
+    markAllAsTaken: async () => { },
+    markAllAsNotTaken: async () => { },
 });
 
 export function useShopping() {
@@ -164,6 +166,28 @@ export function ShoppingProvider({ children }) {
         }
     };
 
+    const markAllAsTaken = async () => {
+        const updatedItems = state.items.map(item => ({ ...item, taken: true }));
+        setState(prev => ({ ...prev, items: updatedItems }));
+        try {
+            await StorageService.saveItems(updatedItems);
+        } catch (error) {
+            await loadItems();
+            throw error;
+        }
+    };
+
+    const markAllAsNotTaken = async () => {
+        const updatedItems = state.items.map(item => ({ ...item, taken: false }));
+        setState(prev => ({ ...prev, items: updatedItems }));
+        try {
+            await StorageService.saveItems(updatedItems);
+        } catch (error) {
+            await loadItems();
+            throw error;
+        }
+    };
+
     const value = {
         items: state.items,
         filter: state.filter,
@@ -178,6 +202,8 @@ export function ShoppingProvider({ children }) {
         getTakenItemsPrice,
         getTotalPrice,
         getFilteredItems,
+        markAllAsTaken,
+        markAllAsNotTaken,
     };
 
     return (
