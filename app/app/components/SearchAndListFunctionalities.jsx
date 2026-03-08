@@ -1,16 +1,19 @@
-import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, Alert } from "react-native";
+import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, Alert, Share } from "react-native";
 import { useShopping } from "../context/ShoppingContext";
+import * as Clipboard from "expo-clipboard";
 import Button from "@/app/components/Button";
 import theme from "@/app/theme";
 
-export default function SearchAndFilter() {
+export default function SearchAndListFunctionalities() {
     const {
         searchTerm,
         setSearchTerm,
         filter,
         setFilter,
         markAllAsTaken,
-        markAllAsNotTaken
+        markAllAsNotTaken,
+        exportList,
+        importList,
     } = useShopping();
 
     const handleMarkAllAsTaken = async () => {
@@ -87,7 +90,7 @@ export default function SearchAndFilter() {
                     <TouchableOpacity
                         key={key}
                         style={[
-                            styles.filterButton,
+                            styles.functionalitiesButton,
                             filter === key && styles.activeFilterButton,
                         ]}
                         onPress={() => setFilter(key)}
@@ -103,16 +106,73 @@ export default function SearchAndFilter() {
                     </TouchableOpacity>
                 ))}
                 <Button
-                    style={styles.filterButton}
+                    style={styles.functionalitiesButton}
                     icon={"checkbox-outline"}
                     color={theme.colors.text}
                     onPress={handleMarkAllAsTaken}
                 />
                 <Button
-                    style={styles.filterButton}
+                    style={styles.functionalitiesButton}
                     icon={"square-outline"}
                     color={theme.colors.text}
                     onPress={handleMarkAllAsNotTaken}
+                />
+                <Button
+                    style={styles.functionalitiesButton}
+                    name={"Exportar lista"}
+                    color={theme.colors.text}
+                    onPress={async () => {
+                        try {
+                            const jsonList = await exportList();
+                            await Share.share({ message: jsonList });
+                            console.log("Lista exportada:", jsonList);
+
+                            Alert.alert(
+                                "Lista Exportada",
+                                "A lista foi copiada com sucesso. Você pode compartilhá-la.",
+                                [{ text: "OK" }]
+                            );
+                        } catch (error) {
+                            Alert.alert("Erro", "Não foi possível exportar a lista.");
+                        }
+                    }}
+                />
+                <Button
+                    style={styles.functionalitiesButton}
+                    name={"Importar lista"}
+                    color={theme.colors.text}
+                    onPress={async () => {
+                        Alert.alert(
+                            "Importar Lista",
+                            "Copie a lista para importar com sucesso.",
+                            [
+                                {
+                                    text: "Não copiei a lista",
+                                    style: "cancel"
+                                },
+                                {
+                                    text: "Já copiei a lista, Importar!",
+                                    onPress: async () => {
+                                        const clipboardText = await Clipboard.getStringAsync();
+                                        if (!clipboardText) {
+                                            Alert.alert("Clipboard vazio", "Copie uma lista primeiro.");
+                                            return;
+                                        }
+
+                                        try {
+                                            const result = await importList(clipboardText);
+                                            Alert.alert(
+                                                "Sucesso",
+                                                `${result.itemsImported} itens importados com sucesso!`
+                                            );
+                                        } catch (error) {
+                                            Alert.alert("Erro ao importar a lista", "Se certifique de copiar corretamente a lista.");
+                                        }
+                                    }
+                                }
+                            ]
+                        );
+                    }}
                 />
             </ScrollView>
         </View>
@@ -134,7 +194,7 @@ const styles = StyleSheet.create({
         color: theme.colors.text,
         marginBottom: theme.spacing.md,
     },
-    filterButton: {
+    functionalitiesButton: {
         paddingHorizontal: theme.spacing.md,
         paddingVertical: theme.spacing.sm,
         borderRadius: theme.borders.sm,

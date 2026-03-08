@@ -17,6 +17,8 @@ const ShoppingContext = createContext({
     getFilteredItems: () => [],
     markAllAsTaken: async () => { },
     markAllAsNotTaken: async () => { },
+    exportList: async () => { },
+    importList: async (jsonList) => { },
 });
 
 export function useShopping() {
@@ -188,6 +190,62 @@ export function ShoppingProvider({ children }) {
         }
     };
 
+    const validateImportedItems = (items) => {
+        if (!Array.isArray(items)) {
+            throw new Error("Invalid format: expected array of items");
+        }
+        
+        return items.map(item => {
+            if (!item.id || !item.name) {
+                throw new Error("Invalid item: missing required fields (id, name)");
+            }
+            return {
+                id: item.id,
+                name: item.name,
+                quantity: item.quantity || 1,
+                unitPrice: item.unitPrice || 0,
+                taken: item.taken || false,
+                note: item.note || "",
+                createdAt: item.createdAt || new Date().toISOString(),
+            };
+        });
+    };
+
+    const exportList = async () => {
+        const exportData = {
+            version: 1,
+            exportedAt: new Date().toISOString(),
+            itemCount: state.items.length,
+            items: state.items,
+        };
+        return JSON.stringify(exportData, null, 2);
+    };
+
+    const importList = async (jsonList) => {
+        try {
+            const data = JSON.parse(jsonList);
+            const itemsToImport = data.items || data;
+            const validatedItems = validateImportedItems(itemsToImport);
+        
+            setState({
+                items: validatedItems,
+                filter: "all",
+                searchTerm: "",
+            });
+            
+            await StorageService.saveItems(validatedItems);
+            
+            return {
+                success: true,
+                itemsImported: validatedItems.length,
+            };
+        } catch (error) {
+            const errorMessage = error.message || "Unknown error during import";
+            console.error("Error importing list:", errorMessage);
+            throw new Error(`Failed to import list: ${errorMessage}`);
+        }
+    };
+
     const value = {
         items: state.items,
         filter: state.filter,
@@ -204,6 +262,8 @@ export function ShoppingProvider({ children }) {
         getFilteredItems,
         markAllAsTaken,
         markAllAsNotTaken,
+        exportList,
+        importList,
     };
 
     return (
