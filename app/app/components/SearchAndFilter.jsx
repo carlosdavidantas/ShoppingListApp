@@ -1,9 +1,66 @@
-import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity, Alert } from "react-native";
 import { useShopping } from "../context/ShoppingContext";
+import Button from "@/app/components/Button";
 import theme from "@/app/theme";
 
 export default function SearchAndFilter() {
-    const { searchTerm, setSearchTerm, filter, setFilter } = useShopping();
+    const {
+        searchTerm,
+        setSearchTerm,
+        filter,
+        setFilter,
+        markAllAsTaken,
+        markAllAsNotTaken
+    } = useShopping();
+
+    const handleMarkAllAsTaken = async () => {
+        try {
+            Alert.alert(
+                "Marcar todos como pegos?",
+                "Deseja realmente marcar todos como pegos? Esta ação não pode ser desfeita.",
+                [
+                    { text: "Cancelar", style: "cancel" },
+                    {
+                        text: "Marcar",
+                        onPress: async () => {
+                            try {
+                                await markAllAsTaken();
+                            } catch (error) {
+                                Alert.alert("Erro", "Não foi possível marcar todos como pegos.");
+                            }
+                        }
+                    }
+                ]
+            )
+        } catch (error) {
+            Alert.alert("Erro", "Não foi possível marcar todos como pegos.");
+        }
+    };
+
+    const handleMarkAllAsNotTaken = async () => {
+        try {
+            Alert.alert(
+                "Desmarcar todos como pegos?",
+                "Deseja realmente desmarcar todos como pegos? Esta ação não pode ser desfeita.",
+                [
+                    { text: "Cancelar", style: "cancel" },
+                    {
+                        text: "Desmarcar",
+                        onPress: async () => {
+                            try {
+                                await markAllAsNotTaken();
+                            } catch (error) {
+                                Alert.alert("Erro", "Não foi possível desmarcar todos como pegos.");
+                            }
+                        }
+                    }
+                ]
+
+            )
+        } catch (error) {
+            Alert.alert("Erro", "Não foi possível marcar todos como pegos.");
+        }
+    };
 
     const filters = [
         { key: 'all', label: 'Todos' },
@@ -24,7 +81,7 @@ export default function SearchAndFilter() {
             <ScrollView
                 horizontal
                 showsHorizontalScrollIndicator={false}
-                style={styles.filterContainer}
+                contentContainerStyle={{ gap: theme.spacing.sm }}
             >
                 {filters.map(({ key, label }) => (
                     <TouchableOpacity
@@ -45,6 +102,18 @@ export default function SearchAndFilter() {
                         </Text>
                     </TouchableOpacity>
                 ))}
+                <Button
+                    style={styles.filterButton}
+                    icon={"checkbox-outline"}
+                    color={theme.colors.text}
+                    onPress={handleMarkAllAsTaken}
+                />
+                <Button
+                    style={styles.filterButton}
+                    icon={"square-outline"}
+                    color={theme.colors.text}
+                    onPress={handleMarkAllAsNotTaken}
+                />
             </ScrollView>
         </View>
     );
@@ -65,15 +134,11 @@ const styles = StyleSheet.create({
         color: theme.colors.text,
         marginBottom: theme.spacing.md,
     },
-    filterContainer: {
-        flexDirection: 'row',
-    },
     filterButton: {
         paddingHorizontal: theme.spacing.md,
         paddingVertical: theme.spacing.sm,
         borderRadius: theme.borders.sm,
         backgroundColor: theme.colors.lightText,
-        marginRight: theme.spacing.md,
         borderWidth: 1,
         borderColor: theme.colors.borderColor,
     },
