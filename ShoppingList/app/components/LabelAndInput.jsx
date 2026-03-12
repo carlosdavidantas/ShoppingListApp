@@ -11,6 +11,7 @@ export default function LabelAndInput({ label, inputPlaceHolder, valueState, onC
                 onChangeText={onChangeTextState}
                 keyboardType={textInputType}
                 style={sytles.input}
+                placeholderTextColor={"#444444"}
             />
         </View>
     );

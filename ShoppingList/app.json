@@ -1,15 +1,16 @@
 {
   "expo": {
-    "name": "app",
-    "slug": "app",
+    "name": "ShoppingList",
+    "slug": "ShoppingList",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "app",
+    "scheme": "ShoppingList",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "shopping.list.app"
     },
     "android": {
       "adaptiveIcon": {
