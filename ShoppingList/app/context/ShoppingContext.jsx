@@ -204,8 +204,8 @@ export function ShoppingProvider({ children }) {
                 name: item.name,
                 quantity: item.quantity || 1,
                 unitPrice: item.unitPrice || 0,
+                unit: item.unit,
                 taken: item.taken || false,
-                note: item.note || "",
                 createdAt: item.createdAt || new Date().toISOString(),
             };
         });
