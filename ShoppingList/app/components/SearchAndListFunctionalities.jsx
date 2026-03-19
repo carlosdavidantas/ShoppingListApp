@@ -85,7 +85,15 @@ export default function SearchAndListFunctionalities() {
                     onChangeText={setSearchTerm}
                     placeholderTextColor={"#444444"}
                 />
-                <Button style={styles.clearInputButton} icon={"close-outline"} iconColor={theme.colors.text} iconSize={22} onPress={handleClearTextInputValue}/>
+                {searchTerm.length > 0 && (
+                    <Button
+                        style={styles.clearInputButton}
+                        icon={"close-outline"}
+                        iconColor={theme.colors.text}
+                        iconSize={22}
+                        onPress={handleClearTextInputValue}
+                    />
+                )}
             </View>
 
 
