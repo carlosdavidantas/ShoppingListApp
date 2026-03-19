@@ -57,7 +57,7 @@ Before running this project, make sure you have installed:
 2. Enter the project folder
 
 ```bash
-cd app
+cd ShoppingList
 ```
 
 3. Install dependencies
@@ -85,7 +85,7 @@ npx expo start
 2. Enter the project folder
 
 ```bash
-cd app/
+cd ShoppingList/
 ```
 
 3. Install dependencies
