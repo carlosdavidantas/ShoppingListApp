@@ -71,15 +71,23 @@ export default function SearchAndListFunctionalities() {
         { key: 'taken', label: 'Pegos' },
     ];
 
+    const handleClearTextInputValue = () => {
+        setSearchTerm("");
+    }
+
     return (
         <View style={styles.container}>
-            <TextInput
-                style={styles.searchInput}
-                placeholder="Buscar itens..."
-                value={searchTerm}
-                onChangeText={setSearchTerm}
-                placeholderTextColor={"#444444"}
-            />
+            <View style={styles.searchInputBackground}>
+                <TextInput
+                    style={styles.searchInput}
+                    placeholder="Buscar itens..."
+                    value={searchTerm}
+                    onChangeText={setSearchTerm}
+                    placeholderTextColor={"#444444"}
+                />
+                <Button style={styles.clearInputButton} icon={"close-outline"} iconColor={theme.colors.text} iconSize={22} onPress={handleClearTextInputValue}/>
+            </View>
+
 
             <ScrollView
                 horizontal
@@ -186,13 +194,31 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: theme.colors.secoundaryText,
     },
-    searchInput: {
+    searchInputBackground: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
         backgroundColor: theme.colors.secoundaryText,
+        borderRadius: theme.borders.sm,
+        marginBottom: theme.spacing.md,
+    },
+    searchInput: {
         borderRadius: theme.borders.sm,
         padding: theme.spacing.md,
         fontSize: theme.fontSizes.md,
         color: theme.colors.text,
-        marginBottom: theme.spacing.md,
+        width: "85%",
+        outlineStyle: "none"
+    },
+    clearInputButton: {
+        width: 40,
+        height: 40,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        outlineStyle: "none",
+        marginRight: theme.spacing.sm,
     },
     functionalitiesButton: {
         paddingHorizontal: theme.spacing.md,
