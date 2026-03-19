@@ -108,19 +108,19 @@ export default function SearchAndListFunctionalities() {
                 <Button
                     style={styles.functionalitiesButton}
                     icon={"checkbox-outline"}
-                    color={theme.colors.text}
+                    iconColor={theme.colors.text}
                     onPress={handleMarkAllAsTaken}
                 />
                 <Button
                     style={styles.functionalitiesButton}
                     icon={"square-outline"}
-                    color={theme.colors.text}
+                    iconColor={theme.colors.text}
                     onPress={handleMarkAllAsNotTaken}
                 />
                 <Button
                     style={styles.functionalitiesButton}
                     name={"Exportar lista"}
-                    color={theme.colors.text}
+                    iconColor={theme.colors.text}
                     onPress={async () => {
                         try {
                             const jsonList = await exportList();
@@ -140,7 +140,7 @@ export default function SearchAndListFunctionalities() {
                 <Button
                     style={styles.functionalitiesButton}
                     name={"Importar lista"}
-                    color={theme.colors.text}
+                    iconColor={theme.colors.text}
                     onPress={async () => {
                         Alert.alert(
                             "Importar Lista",
